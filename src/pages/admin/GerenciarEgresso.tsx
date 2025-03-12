@@ -143,6 +143,7 @@ export default function GerenciarEgresso() {
 
     const confirmarDeleteEgresso = (egresso: Egresso) => {
         setDeleteEgressoId(egresso.idEgresso!);
+        setEgresso(egresso);
         setDeleteEgressoDialog(true);
     };
     const hideUpdateDialog = () => {
@@ -238,7 +239,7 @@ export default function GerenciarEgresso() {
                         <Column
                             field="cursos"
                             header="Curso(s)"
-                            body={(rowData: Egresso) => rowData.cursos.map(curso => curso.nome).join(", ") || "Não informado"}
+                            body={(rowData: Egresso) => rowData.cursos?.map(curso => curso.nome).join(", ") || "Não informado"}
                             sortable
                         ></Column>
                         <Column body={(rowData: Egresso) => (
@@ -364,7 +365,7 @@ export default function GerenciarEgresso() {
                         </div>
                     </Divider>
                     <div className="flex flex-wrap gap-3 mb-4">
-                        {egresso.cursos.map((curso, index) => (
+                        {egresso.cursos?.map((curso, index) => (
                             <div key={index} className="flex flex-wrap gap-3 mb-4">
                                 <div className="flex-auto">
                                     <label htmlFor={`cursoId-${index}`} className="font-bold">Curso Id</label>
@@ -372,8 +373,8 @@ export default function GerenciarEgresso() {
                                         id={`cursoId-${index}`}
                                         value={curso.idCurso}
                                         onChange={(e) => {
-                                            const updatedCursos = [...egresso.cursos];
-                                            updatedCursos[index].idCurso = e.value;
+                                            const updatedCursos = [...(egresso.cursos ?? [])];
+                                            updatedCursos[index] = { ...updatedCursos[index], idCurso: e.value ?? undefined};
                                             setEgresso({ ...egresso, cursos: updatedCursos });
                                         }}
                                     />
@@ -384,7 +385,7 @@ export default function GerenciarEgresso() {
                                         id={`cursoNome-${index}`}
                                         value={curso.nome}
                                         onChange={(e) => {
-                                            const updatedCursos = [...egresso.cursos];
+                                            const updatedCursos = [...(egresso.cursos ?? [])];
                                             updatedCursos[index].nome = e.target.value;
                                             setEgresso({ ...egresso, cursos: updatedCursos });
                                         }}
@@ -396,7 +397,7 @@ export default function GerenciarEgresso() {
                                         id={`cursoTipoNivel-${index}`}
                                         value={curso.tipoNivel}
                                         onChange={(e) => {
-                                            const updatedCursos = [...egresso.cursos];
+                                            const updatedCursos = [...(egresso.cursos ?? [])];
                                             updatedCursos[index].tipoNivel = e.target.value;
                                             setEgresso({ ...egresso, cursos: updatedCursos });
                                         }}
@@ -406,11 +407,13 @@ export default function GerenciarEgresso() {
                                     <label htmlFor={`cursoCoordenador-${index}`} className="font-bold">Coordenador</label>
                                     <InputText disabled
                                         id={`cursoCoordenador-${index}`}
-                                        value={curso.coordenador || ''}
+                                        value={curso.coordenador?.nome || ''}
                                         onChange={(e) => {
-                                            const updatedCursos = [...egresso.cursos];
-                                            updatedCursos[index].coordenador.nome = e.target.value || "Sem coordenador";
-                                            setEgresso({ ...egresso, cursos: updatedCursos });
+                                            const updatedCursos = [...(egresso.cursos ?? [])]; 
+                                            if (updatedCursos[index]) {
+                                                updatedCursos[index].coordenador.nome = e.target.value || "Sem coordenador";
+                                                setEgresso({ ...egresso, cursos: updatedCursos });
+                                            }
                                         }}
                                     />
                                 </div>

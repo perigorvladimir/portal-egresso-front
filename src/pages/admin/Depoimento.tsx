@@ -7,6 +7,7 @@ import { classNames } from "primereact/utils";
 import { egressoService } from "../../services/EgressoService";
 import { depoimentoService } from "../../services/DepoimentoService";
 import { Toast } from "primereact/toast";
+import { Egresso } from "../../types/Egresso";
 
 interface SalvarDepoimentoRequest {
     idEgresso?: number,
@@ -27,7 +28,7 @@ export default function CadastroDepoimento() {
     });
 
     const [submitted, setSubmitted] = useState(false);
-    const [egressos, setEgressos] = useState([]);
+    const [egressos, setEgressos] = useState<Egresso[]>([]);
     const [salvarDepoimentoRequest, setSalvarDepoimento] = useState<SalvarDepoimentoRequest>(emptyDepoimentoRequest);
 
     useEffect(() => {
@@ -49,7 +50,7 @@ export default function CadastroDepoimento() {
 
             // verifica se veio array ou string
             const errorDetails = Array.isArray(error?.response?.data.detalhes)
-                ? error.response.data.detalhes.join(', ') 
+                ? error.response.data.detalhes.join(', ')
                 : error?.response?.data.detalhes || "Erro desconhecido";
 
             toast.current?.show({ severity: 'error', summary: 'Erro', detail: `Não foi possível salvar o depoimento. \nMotivo: ${errorDetails}`, life: 3000 });
@@ -74,6 +75,7 @@ export default function CadastroDepoimento() {
                             idEgresso: e.value ? e.value.idEgresso : null // Se e.value for null, limpa o ID
                         })}
                         options={egressos}
+                        // @ts-ignore
                         optionLabel={(option) => option ? `${option.nome} - ${option.email}` : ""}
                         placeholder="Selecione um egresso"
                         className="w-full"

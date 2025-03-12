@@ -150,7 +150,7 @@ export default function Home() {
               </div>
               <div className="flex-auto">
                 <label htmlFor={`cursoCoordenador-${index}`} className="font-bold">Coordenador</label>
-                <InputText disabled id={`cursoCoordenador-${index}`} value={curso.coordenador || ''} />
+                <InputText disabled id={`cursoCoordenador-${index}`} value={curso.coordenador?.nome || ''} />
               </div>
             </div>
           ))}

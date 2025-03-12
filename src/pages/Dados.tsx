@@ -25,8 +25,8 @@ export default function VisualizacaoDados() {
 
         setDadosCursos(dadosCursoComQuantidade);
 
-        const responseCargos = await depoimentoService.getDadosPorCargo();
-        setDadosCargos(responseCargos.dado);
+        //const responseCargos = await depoimentoService.getDadosPorCargo();
+        //setDadosCargos(responseCargos.dado);
       } catch (error) {
         console.error("Erro ao buscar dados:", error);
       }

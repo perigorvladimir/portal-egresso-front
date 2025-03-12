@@ -82,7 +82,7 @@ export default function Depoimentos() {
               <Card
                 key={index}
                 title={`${depoimento.egresso.nome} - ${new Date(depoimento.data).toLocaleDateString('pt-BR')}`}
-                subTitle={depoimento.egresso.cursos[0].nome}
+                subTitle={depoimento.egresso.cursos?.[0].nome}
                 className="p-shadow-2"
               >
                 <p className="text-gray-700">{depoimento.texto}</p>

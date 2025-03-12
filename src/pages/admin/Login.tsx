@@ -28,7 +28,7 @@ export default function Login() {
             } else {
                 setError(response.data.mensagem || 'Login failed');
             }
-        } catch (err) {
+        } catch (err: any) {
             console.log(err);
             setError(err.response?.data?.mensagem || 'An error occurred');
         }
