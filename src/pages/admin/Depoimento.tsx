@@ -47,10 +47,10 @@ export default function CadastroDepoimento() {
         } catch (error: any) {
             console.error("Erro ao salvar o depoimento:", error);
 
-            // Verifica se 'detalhes' é um array ou uma string
+            // verifica se veio array ou string
             const errorDetails = Array.isArray(error?.response?.data.detalhes)
-                ? error.response.data.detalhes.join(', ') // Junta os itens do array como uma string
-                : error?.response?.data.detalhes || "Erro desconhecido"; // Caso contrário, apenas pega a string ou um valor padrão
+                ? error.response.data.detalhes.join(', ') 
+                : error?.response?.data.detalhes || "Erro desconhecido";
 
             toast.current?.show({ severity: 'error', summary: 'Erro', detail: `Não foi possível salvar o depoimento. \nMotivo: ${errorDetails}`, life: 3000 });
         }

@@ -7,9 +7,9 @@ import { Depoimento } from "../types/Depoimento";
 
 export default function Depoimentos() {
   const [depoimentosRecentes, setDepoimentosRecentes] = useState<Depoimento[]>([]);
-  const [anoSelecionado, setAnoSelecionado] = useState<string>(""); // Ano selecionado
-  const [depoimentosPorAno, setDepoimentosPorAno] = useState<Depoimento[]>([]); // Depoimentos filtrados por ano
-  const [mostrarPorAno, setMostrarPorAno] = useState(false); // Controla a exibição de depoimentos por ano
+  const [anoSelecionado, setAnoSelecionado] = useState<string>("");
+  const [depoimentosPorAno, setDepoimentosPorAno] = useState<Depoimento[]>([]);
+  const [mostrarPorAno, setMostrarPorAno] = useState(false);
 
   const shuffleArray = (array: Depoimento[]) => {
     let shuffledArray = [...array];
@@ -57,7 +57,7 @@ export default function Depoimentos() {
         <div className="flex justify-between items-center mb-5">
           <h2 className="text-3xl font-semibold">Depoimentos</h2>
           <div className="flex items-center gap-4">
-            {/* Input para selecionar o ano */}
+            {/* selecionar ano */}
             <InputText
               type="number"
               value={anoSelecionado}
@@ -74,9 +74,9 @@ export default function Depoimentos() {
           </div>
         </div>
 
-        {/* Exibição de Depoimentos */}
+        {/* exibir */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {/* Exibe depoimentos por ano ou recentes */}
+          {/* por ano ou recentes */}
           {(mostrarPorAno ? depoimentosPorAno : depoimentosRecentes).map(
             (depoimento, index) => (
               <Card

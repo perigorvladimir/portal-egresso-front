@@ -36,7 +36,6 @@ export default function Home() {
     });
   }, []);
 
-  // Função para embaralhar os egressos
   const shuffle = (array: Egresso[]): Egresso[] => {
     let shuffledArray = [...array];
     for (let i = shuffledArray.length - 1; i > 0; i--) {

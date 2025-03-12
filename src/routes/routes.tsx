@@ -16,7 +16,7 @@ const isAuth = () => {
   return !!sessionStorage.getItem("token");
 };
 
-// componente que gerencia a verificação e redirecionamento
+// gerencia verificacao e direcionamento
 const RouterWrapper = () => {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(isAuth());

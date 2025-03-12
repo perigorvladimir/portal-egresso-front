@@ -85,7 +85,7 @@ export default function GerenciarEgresso() {
 
     const saveEgresso = async () => {
         try {
-            const response = await egressoService.saveEgresso(salvarEgressoRequest); // Aguarda a resposta do backend
+            const response = await egressoService.saveEgresso(salvarEgressoRequest); // aguarda resposta
             toast.current?.show({ severity: 'success', summary: 'Sucesso', detail: 'Egresso salvo com sucesso!', life: 3000 });
 
             // atualiza egressos
@@ -97,10 +97,10 @@ export default function GerenciarEgresso() {
         } catch (error: any) {
             console.error("Erro ao salvar o egresso:", error);
 
-            // Verifica se 'detalhes' é um array ou uma string
+            // verifica se veio array ou string
             const errorDetails = Array.isArray(error?.response?.detalhes)
-                ? error.response.detalhes.join(', ') // Junta os itens do array como uma string
-                : error?.response?.detalhes || "Erro desconhecido"; // Caso contrário, apenas pega a string ou um valor padrão
+                ? error.response.detalhes.join(', ')
+                : error?.response?.detalhes || "Erro desconhecido";
 
             toast.current?.show({ severity: 'error', summary: 'Erro', detail: `Não foi possível salvar o egresso. \nMotivo: ${errorDetails}`, life: 3000 });
         }
@@ -110,8 +110,8 @@ export default function GerenciarEgresso() {
         try {
             const response = await egressoService.updateEgresso(egressoSelecionadoId, egresso);
             toast.current?.show({ severity: 'success', summary: 'Sucesso', detail: 'Egresso atualizado com sucesso!', life: 3000 });
-
-            // Atualiza a lista de egressos com os dados mais recentes
+            
+            //atualiza lista de egressos
             const updatedEgressos = await egressoService.getEgressos();
             setEgressos(updatedEgressos.dado);
 
@@ -120,10 +120,10 @@ export default function GerenciarEgresso() {
         } catch (error: any) {
             console.error("Erro ao salvar o egresso:", error);
 
-            // Verifica se 'detalhes' é um array ou uma string
+            // verifica se veio array ou string
             const errorDetails = Array.isArray(error?.response?.data.detalhes)
-                ? error.response.data.detalhes.join(', ') // Junta os itens do array como uma string
-                : error?.response?.data.detalhes || "Erro desconhecido"; // Caso contrário, apenas pega a string ou um valor padrão
+                ? error.response.data.detalhes.join(', ')
+                : error?.response?.data.detalhes || "Erro desconhecido";
 
             toast.current?.show({ severity: 'error', summary: 'Erro', detail: `Não foi possível salvar o egresso. \nMotivo: ${errorDetails}`, life: 3000 });
         }
@@ -176,7 +176,7 @@ export default function GerenciarEgresso() {
             const response = await egressoService.vincularACurso(idEgresso, cursoEgresso);
             toast.current?.show({ severity: 'success', summary: 'Sucesso', detail: 'Egresso vinculado com sucesso!', life: 3000 });
 
-            // Atualiza a lista de egressos com os dados mais recentes
+            // atualiza lista de egressos
             const updatedEgressos = await egressoService.getEgressos();
             setEgressos(updatedEgressos.dado);
 
@@ -184,10 +184,9 @@ export default function GerenciarEgresso() {
             setCursoEgresso(emptyCursoEgresso);
         } catch (error: any) {
             console.error("Erro ao vincular o egresso:", error);
-            // Verifica se 'detalhes' é um array ou uma string
             const errorDetails = Array.isArray(error?.response?.detalhes)
-                ? error.response.detalhes.join(', ') // Junta os itens do array como uma string
-                : error?.response?.detalhes || "Erro desconhecido"; // Caso contrário, apenas pega a string ou um valor padrão
+                ? error.response.detalhes.join(', ')
+                : error?.response?.detalhes || "Erro desconhecido";
             toast.current?.show({ severity: 'error', summary: 'Erro', detail: `Não foi possível salvar o egresso. \nMotivo: ${errorDetails}`, life: 3000 });
         }
     };
@@ -255,7 +254,7 @@ export default function GerenciarEgresso() {
                 <Dialog visible={egressoDialog} style={{ width: '50rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Detalhes do Egresso" modal className="p-fluid" footer={saveEgressoDialogFooter} onHide={hideDialog}>
                     <div>
                         <label htmlFor="nome" className="font-bold block mb-2">Nome</label>
-                        <InputText id="nome" value={salvarEgressoRequest.nome} keyfilter="alpha" onChange={(e) => setSalvarEgresso({ ...salvarEgressoRequest, nome: e.target.value })} />
+                        <InputText id="nome" value={salvarEgressoRequest.nome} keyfilter={/^[a-zA-Z\s]*$/} onChange={(e) => setSalvarEgresso({ ...salvarEgressoRequest, nome: e.target.value })} />
                     </div>
                     <div>
                         <label htmlFor="email" className="font-bold block mb-2">E-mail</label>
@@ -299,7 +298,7 @@ export default function GerenciarEgresso() {
                                 value={cursos.find(curso => curso.idCurso === salvarEgressoRequest.idCurso) || null}
                                 onChange={(e) => setSalvarEgresso({
                                     ...salvarEgressoRequest,
-                                    idCurso: e.value ? e.value.idCurso : null // Se e.value for null, limpa o ID
+                                    idCurso: e.value ? e.value.idCurso : null // se e.value for null, limpa o ID
                                 })}
                                 options={cursos}
                                 optionLabel="nome"
