@@ -11,7 +11,7 @@ export default defineConfig({
   build: {
     // ajuste do limite de tamanho de chunk para evitar aviso
     chunkSizeWarningLimit: 1000, // aumentar o limite para 1000 KB, ou conforme necessário
-    outDir: 'build',
+    outDir: 'dist',
     rollupOptions: {
       output: {
         manualChunks(id) {
