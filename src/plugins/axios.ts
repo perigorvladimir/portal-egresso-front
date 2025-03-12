@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseUrl: 'http://localhost:8080',
+    baseURL: import.meta.env.VITE_API_URL,
     timeout: 5000,
     withCredentials: true,
     headers: {
@@ -9,12 +9,17 @@ const api = axios.create({
     },
 });
 
-api.interceptors.request.use((config) => {
-    const token = localStorage.getItem('token');
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+api.interceptors.request.use(
+    (config) => {
+        const token = sessionStorage.getItem("token");
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
     }
-    return config;
-})
+);
 
 export default api;

@@ -1,5 +1,6 @@
 import api from "../plugins/axios";
-const baseUrl = "http://localhost:8080/portalegresso/api";
+import { Egresso } from "../types/Egresso";
+const baseUrl = import.meta.env.VITE_API_URL;
 class EgressoService {
     async getEgressos()  {
         return api.get(`${baseUrl}/egresso`).then((res) => res.data);
@@ -10,11 +11,14 @@ class EgressoService {
     async saveEgresso(egresso: any) {
         return api.post(`${baseUrl}/egresso`, egresso).then((res) => res.data);
     }
-    async updateEgresso(id: number, egresso: any) {
+    async updateEgresso(id: number, egresso: Egresso) {
         return api.put(`${baseUrl}/egresso/${id}`, egresso).then((res) => res.data);
     }
-    async deleteEgresso(id: string) {
+    async deleteEgresso(id: number) {
         return api.delete(`${baseUrl}/egresso/${id}`).then((res) => res.data);
+    }
+    async vincularACurso(idEgresso: number, dadosCurso: any) {
+        return api.post(`${baseUrl}/egresso/${idEgresso}/curso`, dadosCurso).then((res) => res.data);
     }
 }
 

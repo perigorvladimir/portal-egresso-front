@@ -10,8 +10,12 @@ export default function Layout() {
 
   const signOut = () => {
     //logica de deslogar
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("userName");
     navigate("/login");
   }
+  const nomeUser = sessionStorage.getItem("userName");
+  
 
   const items = [
       {
@@ -35,11 +39,6 @@ export default function Layout() {
         ]
       },
       {
-          label: 'Vincular',
-          icon: 'pi pi-check-circle',
-          command: () => navigate("/admin/vincular")
-      },
-      {
           label: 'Depoimento',
           icon: 'pi pi-comment',
           command: () => navigate("/admin/depoimento")
@@ -49,7 +48,7 @@ export default function Layout() {
 
   const end = (
     <div className="flex align-items-center gap-8 mr-6">
-        <h2 className="pt-1">Geraldo Braz Junior</h2>
+        <h2 className="pt-1">{nomeUser}</h2>
         <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png" shape="circle" />
         <Tooltip target=".icone-logout" />
         <i className="icone-logout pi pi-sign-out pt-1" style={{ fontSize: '1.4rem', color: '#fc4e03', cursor: 'pointer' }} onClick={signOut} data-pr-tooltip="Logout" data-pr-position="bottom"/>
